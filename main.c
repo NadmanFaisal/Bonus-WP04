@@ -1,41 +1,51 @@
 #include <stdio.h>
+#include <string.h>
 
-void swap(int *fristIndex, int *secondIndex, char *string) {
+void swap(char *firstChar, char *secondChar) {
+    char tempChar = *firstChar;
+    *firstChar = *secondChar;
+    *secondChar = tempChar;
+}
 
-    int j = 0;
-    char tempChar1 = string[*fristIndex];
-    char tempChar2 = string[*secondIndex];
-    
-    string[*fristIndex] = tempChar2;
-    string[*secondIndex] = tempChar1;
+void permutate(char *string, int firstIndex, int lastIndex) {
+    if (firstIndex == lastIndex) {
+        printf("%s ", string);
+        return;
+    }
 
-    printf("%s \n", string);
+    for (int i = firstIndex; i <= lastIndex; i++) {
+        swap(&string[firstIndex], &string[i]);
+        permutate(string, firstIndex + 1, lastIndex);
+        swap(&string[firstIndex], &string[i]);
+    }
 }
 
 int *stringLength(char *string) {
     static int counter = 0;
-    while(string[counter] != '\0') {
-        string[counter];
+    while (string[counter] != '\0') {
         counter++;
     }
-
     return &counter;
 }
 
 int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Invalid arguements\n");
+        return 0;
+    }
+
     char *string = argv[1];
-    printf("All permutatoins of the string %s are: ", string);
-    printf("\n");
 
     int *pLength = stringLength(string);
-    int i = 0;
-    int *pI = &i;
-    
-    printf("Length of the string: %d\n", *pLength);
 
-    swap(pI, pLength, string);
+    if(*pLength > 10) {
+        printf("cannot be more than 10 characters.invalid\n");
+        return 0;
+    }
 
-
+    printf("All permutations of the string %s are: ", string);
+    permutate(string, 0, *pLength - 1);
     printf("\n");
 
+    return 0;
 }
