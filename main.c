@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 int stringLength(char *string) {
-    static int counter = 0;
+    int counter = 0;
     while (string[counter] != '\0') {
         counter++;
     }
@@ -17,9 +17,9 @@ void swap(char *firstChar, char *secondChar) {
 }
 
 void permutate(char *string, int firstIndex, int lastIndex, char **array, int *count) {
-    array[*count] = (char *)malloc((stringLength(string) + 1) * sizeof(char));
     
     if (firstIndex == lastIndex) {
+        array[*count] = (char *)malloc((stringLength(string) + 1) * sizeof(char));
         strcpy(array[*count], string);
         (*count)++;
         return;
@@ -48,12 +48,14 @@ int main(int argc, char *argv[]) {
     }
 
     char *string = argv[1];
+    char **storage;
     
     int length = stringLength(string);
     int combinations = factorial(length);
+    
     int count = 0;
     
-    char **storage = (char **)malloc(combinations * sizeof(char *));
+    storage = malloc(combinations * sizeof(char *));
     
     if(length > 10) {
         printf("cannot be more than 10 characters.invalid\n");
@@ -66,6 +68,7 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < combinations; i++) {
         printf("%s ", storage[i]);
+        free(storage[i]);
     }
     printf("\n");
 
