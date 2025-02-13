@@ -29,8 +29,9 @@ void permutate(char *string, int firstIndex, int lastIndex, char **array, int *c
     
     // Base case
     if (firstIndex == lastIndex) {
-        array[*count] = malloc((stringLength(string) + 1) * sizeof(char));          // Allocates memory for the string in the array
-        strcpy(array[*count], string);                                              // copies the string to the array
+        array[*count] = malloc((stringLength(string) + 1) * sizeof(char));          // Allocates memory to store the permutation of the string, 
+                                                                                    // the block of memory is being pointed by the array pointer
+        strcpy(array[*count], string);                                              // copies the permutattion of the string to the block of memory
         (*count)++;                                                                 // increments the count to keep track of the array index location
         return;                                                                     // exits recursive call.
     }
